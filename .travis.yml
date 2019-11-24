@@ -1,8 +1,7 @@
 language: java
 
 jdk:
-  - oraclejdk8
-  - openjdk8
+  - oraclejdk9
 
 services:
   - docker
@@ -11,3 +10,6 @@ before_install:
 - docker run -d -p 127.0.0.1:7419:7419 contribsys/faktory
 - docker ps
 - sleep 5
+
+script:
+  - mvn test -B
