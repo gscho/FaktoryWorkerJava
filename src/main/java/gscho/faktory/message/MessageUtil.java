@@ -14,7 +14,7 @@ public class MessageUtil{
 
 	private static final ObjectMapper mapper = new ObjectMapper().setSerializationInclusion( Include.NON_NULL ).configure( SerializationFeature.FAIL_ON_EMPTY_BEANS, false );
 
-	public static Message fromString( String message, Class klass ) throws Exception{
+	public static Message fromString( String message, Class<Message> klass ) throws Exception{
 		if( message.equals( "" ) || message == null ){
 			return null; //nil response is common when fetching work
 		}
