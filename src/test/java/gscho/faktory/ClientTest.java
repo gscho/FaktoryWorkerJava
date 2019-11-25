@@ -8,7 +8,9 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import gscho.faktory.message.MessageUtil;
 import gscho.faktory.message.receive.Hi;
 import gscho.faktory.message.receive.Ok;
+import gscho.faktory.message.send.Fetch;
 import gscho.faktory.message.send.Hello;
+import gscho.faktory.message.send.Job;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -41,6 +43,11 @@ public class ClientTest extends TestCase{
 		client.sendMessage( new Hello( 2 ) );
 		Ok ok = (Ok) client.getMessage( Ok.class );
 		assertEquals( "OK", MessageUtil.toString( ok ) );
+		client.sendMessage( new Job( "123861239abnadsa", "SomeName", new Object[]{1, 2, "hello"} ) );
+		System.err.println( client.getMessage() );
+		client.sendMessage( new Fetch() );
+		System.err.println( client.getMessage() );
+		System.err.println( client.getMessage() );
 		client.stopConnection();
 	}
 }

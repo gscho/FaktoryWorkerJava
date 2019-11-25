@@ -39,6 +39,7 @@ public class Client{
 			System.exit( 1 );
 		}
 		catch( IOException io ){
+			L.severe( String.format( "Failed to start connection to: %s:%s", connection.getIp(), connection.getPort() ) );
 			L.severe( io.getMessage() );
 			System.exit( 1 );
 		}
@@ -93,5 +94,17 @@ public class Client{
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public String getMessage(){
+		try{
+			return in.readLine();
+		}
+		catch( IOException e ){
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+
 	}
 }
