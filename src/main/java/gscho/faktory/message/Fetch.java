@@ -1,6 +1,4 @@
-package gscho.faktory.message.send;
-
-import gscho.faktory.message.Message;
+package gscho.faktory.message;
 
 public class Fetch extends Message{
 

@@ -1,4 +1,4 @@
-package gscho.faktory;
+package gscho.faktory.worker;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

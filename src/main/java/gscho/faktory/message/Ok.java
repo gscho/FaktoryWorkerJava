@@ -1,8 +1,6 @@
-package gscho.faktory.message.receive;
+package gscho.faktory.message;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import gscho.faktory.message.Message;
 
 public class Ok extends Message{
 

@@ -1,15 +1,12 @@
-package gscho.faktory.message.send;
+package gscho.faktory.message;
 
+import java.util.Arrays;
 import java.util.Map;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import gscho.faktory.message.Message;
 
 public class Job extends Message{
 
 	String jid;
-	String jobType;
+	String jobtype;
 	Object[] args;
 	String queue;
 	String reserve_for;
@@ -21,9 +18,13 @@ public class Job extends Message{
 	Map<String, Object> failure;
 	Map<String, Object> custom;
 
-	public Job( String jid, String jobType, Object[] args ){
+	public Job(){
+
+	}
+
+	public Job( String jid, String jobtype, Object[] args ){
 		this.jid = jid;
-		this.jobType = jobType;
+		this.jobtype = jobtype;
 		this.args = args;
 	}
 
@@ -35,12 +36,12 @@ public class Job extends Message{
 		this.jid = jid;
 	}
 
-	public String getJobType(){
-		return jobType;
+	public String getJobtype(){
+		return jobtype;
 	}
 
-	public void setJobType( String jobType ){
-		this.jobType = jobType;
+	public void setJobtype( String jobtype ){
+		this.jobtype = jobtype;
 	}
 
 	public Object[] getArgs(){
@@ -124,9 +125,13 @@ public class Job extends Message{
 	}
 
 	@Override
-	@JsonIgnore
 	public String getPreamble(){
 		return "PUSH";
+	}
+
+	@Override
+	public String toString(){
+		return "Job [jid=" + jid + ", jobType=" + jobtype + ", args=" + Arrays.toString( args ) + ", queue=" + queue + ", reserve_for=" + reserve_for + ", at=" + at + ", retry=" + retry + ", backtrace=" + backtrace + ", created_at=" + created_at + ", enqueued_at=" + enqueued_at + ", failure=" + failure + ", custom=" + custom + "]";
 	}
 
 }

@@ -1,8 +1,6 @@
-package gscho.faktory.message.send;
+package gscho.faktory.message;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import gscho.faktory.message.Message;
 
 public class Hello extends Message{
 
@@ -68,7 +66,6 @@ public class Hello extends Message{
 	}
 
 	@Override
-	@JsonIgnore
 	public String getPreamble(){
 		return "HELLO";
 	}

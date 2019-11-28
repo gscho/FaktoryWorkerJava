@@ -1,4 +1,4 @@
-package gscho.faktory;
+package gscho.faktory.worker;
 
 import java.net.URI;
 import java.util.Optional;

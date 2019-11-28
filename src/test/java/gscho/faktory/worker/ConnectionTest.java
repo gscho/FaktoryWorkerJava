@@ -1,5 +1,6 @@
-package gscho.faktory;
+package gscho.faktory.worker;
 
+import gscho.faktory.worker.Connection;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
