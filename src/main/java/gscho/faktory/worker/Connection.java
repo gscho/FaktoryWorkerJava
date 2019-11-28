@@ -7,16 +7,20 @@ public class Connection{
 
 	private final static String FAKTORY_PROVIDER = "FAKTORY_PROVIDER";
 	private final static String DEFAULT_URI = "tcp://localhost:7419";
+	private static final String FAKTORY_PASSWORD = "FAKTORY_PASSWORD";
 	private URI uri;
+	private String password;
 
 	public Connection(){
 		String provider = System.getenv( FAKTORY_PROVIDER );
 		if( provider != null ){
-			uri = URI.create( Optional.of( System.getenv( provider ) ).orElse( DEFAULT_URI ) );
+			this.uri = URI.create( Optional.of( System.getenv( provider ) ).orElse( DEFAULT_URI ) );
 		}
 		else{
-			uri = URI.create( DEFAULT_URI );
+			this.uri = URI.create( DEFAULT_URI );
 		}
+
+		this.password = System.getenv( FAKTORY_PASSWORD );
 	}
 
 	public URI getUri(){
@@ -33,6 +37,14 @@ public class Connection{
 
 	public int getPort(){
 		return this.uri.getPort();
+	}
+
+	public String getPassword(){
+		return password;
+	}
+
+	public void setPassword( String password ){
+		this.password = password;
 	}
 
 }

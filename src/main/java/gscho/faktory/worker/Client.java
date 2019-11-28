@@ -7,6 +7,9 @@ import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.logging.Logger;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -34,7 +37,7 @@ public class Client{
 	@FunctionalInterface
 	interface Hasher{
 
-		String hash( int iter, String pwd, String salt );
+		String hash( Hi hi, String password );
 	}
 
 	private static final Logger L = Logger.getLogger( Client.class.getName() );
@@ -45,7 +48,28 @@ public class Client{
 	private PrintWriter out;
 	private BufferedReader in;
 
-	private final static Hasher HASHER = ( int iter, String pwd, String salt ) -> "";
+	private static final Hasher HASHER = ( Hi hi, String password ) -> {
+		String data = password + hi.getS();
+		MessageDigest digest = null;
+		try{
+			digest = MessageDigest.getInstance( "SHA-256" );
+		}
+		catch( NoSuchAlgorithmException e ){
+			e.printStackTrace();
+		}
+		byte[] hash = data.getBytes( StandardCharsets.UTF_8 );
+		for( int i = 0; i < hi.getI(); i++ ){
+			hash = digest.digest( hash );
+		}
+		StringBuffer hexString = new StringBuffer();
+		for( int i = 0; i < hash.length; i++ ){
+			String hex = Integer.toHexString( 0xff & hash[i] );
+			if( hex.length() == 1 )
+				hexString.append( '0' );
+			hexString.append( hex );
+		}
+		return hexString.toString();
+	};
 
 	public Client(){
 		this( new Connection() );
@@ -81,12 +105,12 @@ public class Client{
 		out = new PrintWriter( clientSocket.getOutputStream(), true );
 		in = new BufferedReader( new InputStreamReader( clientSocket.getInputStream() ) );
 		Hi hi = receiveHi();
+		Hello hello = new Hello();
+		hello.setV( 2 );
 		if( hi.getS() != null ){
-			return sendHello( hi );
+			hello.setPwdhash( HASHER.hash( hi, connection.getPassword() ) );
 		}
-		else{
-			return sendHelloNoPassword();
-		}
+		return sendHello( hello );
 	}
 
 	public void sendMessage( Message msg ){
@@ -215,13 +239,8 @@ public class Client{
 		return receiveOk();
 	}
 
-	public boolean sendHello( Hi hi ){
-		// TODO Auto-generated method stub
-		return receiveOk();
-	}
-
-	public boolean sendHelloNoPassword(){
-		sendMessage( new Hello( 2 ) );
+	public boolean sendHello( Hello hello ){
+		sendMessage( hello );
 		return receiveOk();
 	}
 

@@ -11,18 +11,7 @@ public class MessageUtil{
 
 
 	public static String toString( Message message ){
-		try{
-			String json = mapper.writeValueAsString( message );
-			if( json.equals( "{}" ) ){
-				return String.format( "%s", message.getPreamble() );
-			}
-			else{
-				return String.format( "%s %s", message.getPreamble(), json );
-			}
-		}
-		catch( JsonProcessingException jsonProcessing ){
-			jsonProcessing.printStackTrace();
-		}
+		
 		return null;
 
 	}
